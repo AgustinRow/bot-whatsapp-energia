@@ -1,7 +1,6 @@
 const { google } = require('googleapis');
 const fs = require('fs');
 require('dotenv').config;
-
 const sheetName = process.env.SHEET_NAME;
 
 class GoogleSheet {
@@ -13,7 +12,11 @@ class GoogleSheet {
 
   async initialize() {
     const auth = new google.auth.GoogleAuth({
-      keyFile: process.env.GOOGLE_SHEET_KEYS,
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+        client_id: process.env.GOOLE_CLIENT_ID,
+        private_key: process.env.GOOGLE_PRIVATE_KEY,
+      },
       scopes: 'https://www.googleapis.com/auth/spreadsheets',
     });
 
