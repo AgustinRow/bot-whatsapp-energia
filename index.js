@@ -1,5 +1,5 @@
 const { Client, LocalAuth, Buttons } = require('whatsapp-web.js');
-const qrcode = require('qrcode-terminal');
+const qrcode = require('qrcode');
 const { Chat, ShowActivitiesState } = require('./chat');
 const { GoogleSheet } = require('./sheet');
 require('dotenv').config;
@@ -83,22 +83,42 @@ const findOwner = (receiver) => {
   }
 };
 
-clientAgus.on('qr', (qr) => {
+/* clientNati.on('qr', (qr) => {
   qrcode.generate(qr, { small: true });
-});
-clientNati.on('qr', (qr) => {
-  qrcode.generate(qr, { small: true });
-});
+}); */
 
 clientAgus.on('message', handleChatMessage);
-clientNati.on('message', handleChatMessage);
+/* clientNati.on('message', handleChatMessage); */
 
 clientAgus.on('ready', () => {
   console.log('¡El bot de Agus listo!');
 });
-clientNati.on('ready', () => {
+/* clientNati.on('ready', () => {
   console.log('¡El bot de Nati listo!');
 });
+ */
+const qrCodes = async (qr) => {
+  return await qrcode.toDataURL(qr);
+};
 
 clientAgus.initialize();
-clientNati.initialize();
+/* clientNati.initialize(); */
+
+let qrCodeData = null;
+
+// Event listener to capture the QR code
+clientAgus.on('qr', async (qr) => {
+  qrCodeData = await qrCodes(qr);
+});
+
+function runClient(req, res) {
+  if (qrCodeData) {
+    // Render the QR code view and pass the QR code data
+    console.log(qrCodeData);
+    res.render('qr', { qrCode: qrCodeData });
+  } else {
+    // If QR code data is not available yet, you can render a loading page or handle it as needed
+    res.send('QR code not available yet. Please try again later.');
+  }
+}
+module.exports.runClient = runClient;
