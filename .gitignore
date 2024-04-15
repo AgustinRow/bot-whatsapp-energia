@@ -131,3 +131,6 @@ dist
 .wwebjs_auth/
 
 bot-wp-payment.json
+
+node_modules/
+.netlify

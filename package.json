@@ -2,9 +2,11 @@
   "name": "manual-bot",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://agustinrow.github.io/bot-whatsapp-energia/",
   "scripts": {
     "chat": "node index.js",
     "start": "node server.js",
+    "build": "netlify deploy --prod",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write ."
   },
@@ -17,8 +19,11 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "googleapis": "^134.0.0",
+    "netlify-cli": "^17.22.1",
+    "netlify-lambda": "^2.0.16",
     "qrcode": "^1.5.3",
     "qrcode-terminal": "^0.12.0",
+    "serverless-http": "^3.2.0",
     "whatsapp-web.js": "^1.23.0"
   },
   "devDependencies": {
